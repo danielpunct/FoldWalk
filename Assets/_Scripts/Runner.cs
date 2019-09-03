@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Runner : Singleton<Runner>
 {
+    // speed as how much time runner needs to walk over the distance of 1
     public float passTileTime = 0.3f;
     Rigidbody _rb;
     Transform _tr;
@@ -30,12 +31,15 @@ public class Runner : Singleton<Runner>
 
     void FixedUpdate()
     {
+        // update current position in grid
         currentPosition2D = _tr.localPosition.To2D();
+
+        // take the actual position as floats to compare with the destination and get there as close as is acceptable
         var currentPosition2DFloats = _tr.localPosition.To2DXZ();
 
+        // compare with destination
         if ((destinationPosition2D - currentPosition2DFloats).sqrMagnitude >0.02f)
         {
-            Debug.Log("move to  " + (_tr.position + currentDirection * Speed).z + "  from " + _tr.position.z);
             _rb.MovePosition(_tr.position + currentDirection * Speed);
         }
     }
