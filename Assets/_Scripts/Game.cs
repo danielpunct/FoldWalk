@@ -13,7 +13,7 @@ public class Game : Singleton<Game>
 
     public void SetupLevel(LevelConfig levelConfig)
     {
-        runnerHolder.transform.localPosition = levelConfig.startPosition.To3D();
+        runnerHolder.Setup(levelConfig.startPosition, levelConfig);
         holeHolder.transform.localPosition = levelConfig.targetPosition.To3D();
 
         obstaclesHolder.DestroyChildren();

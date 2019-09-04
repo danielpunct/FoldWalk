@@ -6,8 +6,11 @@ public class Runner : Singleton<Runner>
 {
     // speed as how much time runner needs to walk over the distance of 1
     public float passTileTime = 0.3f;
+
     Rigidbody _rb;
     Transform _tr;
+    LevelConfig _currentLevel;
+    RunnerState _state;
 
     Vector2Int currentPosition2D = new Vector2Int(0, 0);
     Vector2Int destinationPosition2D = new Vector2Int(0, 0);
@@ -24,11 +27,6 @@ public class Runner : Singleton<Runner>
         _tr = transform;
     }
 
-    private void Start()
-    {
-        _tr.localPosition = currentPosition2D.To3D();
-    }
-
     void FixedUpdate()
     {
         // update current position in grid
@@ -41,11 +39,28 @@ public class Runner : Singleton<Runner>
         if ((destinationPosition2D - currentPosition2DFloats).sqrMagnitude >0.02f)
         {
             _rb.MovePosition(_tr.position + currentDirection * Speed);
+            _state = RunnerState.Walking;
         }
+        else
+        {
+            _state = RunnerState.Resting;
+        }
+    }
+
+    public void Setup(Vector2Int startPosition, LevelConfig levelConfig)
+    {
+        _currentLevel = levelConfig;
+        currentPosition2D = startPosition;
+        _tr.localPosition = currentPosition2D.To3D();
+        _state = RunnerState.Resting;
     }
 
     public void SetDirection(Vector3 direction)
     {
+        if(_state == RunnerState.Walking)
+        {
+            return;
+        }
         FaceDireciton(direction);
         StartMove(direction);
 
@@ -60,7 +75,7 @@ public class Runner : Singleton<Runner>
 
     void StartMove(Vector3 direction)
     {
-        destinationPosition2D = Grid.Instance.GetAvailablePosition(currentPosition2D, direction.To2D());
+        destinationPosition2D = Grid.Instance.GetAvailablePosition(currentPosition2D, direction.To2D(), _currentLevel);
     }
 
     private void OnDrawGizmos()

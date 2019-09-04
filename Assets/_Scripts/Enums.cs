@@ -9,3 +9,10 @@ public enum TileState
     Target,
     Start
 }
+
+
+public enum RunnerState
+{
+    Resting, 
+    Walking
+}

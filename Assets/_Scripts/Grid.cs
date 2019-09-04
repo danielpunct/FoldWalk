@@ -13,10 +13,10 @@ public class Grid : Singleton<Grid>
     /// </summary>
     /// <param name="from"></param>
     /// <param name="direction"></param>
-    public Vector2Int GetAvailablePosition(Vector2Int from, Vector2Int direction)
+    public Vector2Int GetAvailablePosition(Vector2Int from, Vector2Int direction, LevelConfig levelConfig)
     {
         var newPos = from;
-        while (IsPositionAvailable(newPos + direction))
+        while (IsPositionAvailable(newPos + direction, levelConfig))
         {
             newPos += direction;
         }
@@ -28,12 +28,17 @@ public class Grid : Singleton<Grid>
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    bool IsPositionAvailable(Vector2 position)
+    bool IsPositionAvailable(Vector2Int position, LevelConfig currentLevel)
     {
         if (position.x < 0 ||
             position.x > maxX ||
             position.y < 0 ||
             position.y > maxY)
+        {
+            return false;
+        }
+
+        if(currentLevel.GetValue(position.x, position.y) == (int)TileState.Obstacle)
         {
             return false;
         }
