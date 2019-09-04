@@ -2,6 +2,16 @@
 
 public class GameManager : MonoBehaviour
 {
+    public StageLevelsData[] Stages;
+
+    int currentStage = 0;
+    int currentLevel = 0;
+
+    public void StartGame()
+    {
+
+    }
+
 
     /// <summary>
     /// Translate the Swipe gesture from the mouse to a direction for the player
