@@ -23,7 +23,7 @@ public class TurnPage : MonoBehaviour
     public void ResetForMenu()
     {
         joint.useMotor = false;
-        joint.transform.DOLocalRotate(new Vector3(-158, 0, 0), 0.5f);
+        joint.transform.DOLocalRotate(new Vector3(-157, 0, 0), 0.5f);
     }
 
     public void StartLevel(bool afterPass)

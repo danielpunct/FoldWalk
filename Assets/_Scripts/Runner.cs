@@ -6,6 +6,7 @@ public class Runner : Singleton<Runner>
 {
     // speed as how much time runner needs to walk over the distance of 1
     public float passTileTime = 0.3f;
+    public Animator animator;
 
     Rigidbody _rb;
     Transform _tr;
@@ -45,10 +46,12 @@ public class Runner : Singleton<Runner>
         {
             _rb.MovePosition(_tr.position + currentDirection * Speed);
             _state = RunnerState.Walking;
+            animator.SetTrigger("Run");
         }
         else
         {
             _state = RunnerState.Idle;
+            animator.SetTrigger("Idle");
         }
     }
 
@@ -103,7 +106,6 @@ public class Runner : Singleton<Runner>
     {
         if(collision.collider.tag == "Turning Page")
         {
-            Debug.Log("page enter" + collision.collider.name);
             Game.Instance.OnPlayerHitPage();
         }
     }

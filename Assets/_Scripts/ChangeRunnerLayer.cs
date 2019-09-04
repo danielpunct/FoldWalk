@@ -11,7 +11,6 @@ public class ChangeRunnerLayer : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-            Debug.Log("player enter");
             other.gameObject.layer = LayerOnEnter;
             skipExit = true;
 

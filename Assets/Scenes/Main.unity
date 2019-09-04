@@ -479,6 +479,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c27d6b96b2f024548a312d29fa44dc42, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7cda92a54d89b784f93dfc4d894a279c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6592,6 +6597,12 @@ Transform:
   m_Father: {fileID: 1781817412}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1159028930 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 7cda92a54d89b784f93dfc4d894a279c,
+    type: 3}
+  m_PrefabInstance: {fileID: 239354285}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1186552589
 GameObject:
   m_ObjectHideFlags: 0
@@ -7490,6 +7501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   __messageText: 
   passTileTime: 0.15
+  animator: {fileID: 1159028930}
 --- !u!1 &1781817410
 GameObject:
   m_ObjectHideFlags: 0
