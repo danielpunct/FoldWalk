@@ -291,7 +291,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: boy
       objectReference: {fileID: 0}
+    - target: {fileID: 3473422932713535358, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481103865952179500, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5880859603364352141, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051415255134806348, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7530129807026427838, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553131034789722940, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1352665806181031915, guid: 7cda92a54d89b784f93dfc4d894a279c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866482569861393897, guid: 7cda92a54d89b784f93dfc4d894a279c,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -301,11 +336,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c27d6b96b2f024548a312d29fa44dc42, type: 2}
-    - target: {fileID: -5880859603364352141, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7cda92a54d89b784f93dfc4d894a279c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -375,36 +405,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5968
-      objectReference: {fileID: 0}
-    - target: {fileID: -1352665806181031915, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2481103865952179500, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3473422932713535358, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553131034789722940, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3866482569861393897, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8051415255134806348, guid: 7cda92a54d89b784f93dfc4d894a279c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cda92a54d89b784f93dfc4d894a279c, type: 3}
@@ -1144,6 +1144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 834052094}
   - component: {fileID: 834052095}
+  - component: {fileID: 834052096}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -1183,6 +1184,18 @@ MonoBehaviour:
   __messageText: 
   maxX: 4
   maxY: 4
+--- !u!114 &834052096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834052093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7469d4bb5465f224a8a051f1629acc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &845443415
 GameObject:
   m_ObjectHideFlags: 0
@@ -2120,6 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087c9c9d142ed564f98576cd97bd8693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stages: []
 --- !u!4 &1781817412
 Transform:
   m_ObjectHideFlags: 0

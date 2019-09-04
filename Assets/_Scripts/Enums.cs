@@ -6,5 +6,6 @@ public enum TileState
 {
     Free = 0,
     Obstacle,
-    Target
+    Target,
+    Start
 }

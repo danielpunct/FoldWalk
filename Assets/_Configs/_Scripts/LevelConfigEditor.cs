@@ -7,7 +7,8 @@ using UnityEngine;
 public class LevelConfigEditor : Editor
 {
 
-    public Color[] colors = new[] { Color.green, Color.red, Color.magenta };
+    public Color[] colors = new[] { Color.green, Color.red, Color.magenta, Color.cyan };
+
 
     public override void OnInspectorGUI()
     {
@@ -25,10 +26,24 @@ public class LevelConfigEditor : Editor
             EditorGUILayout.BeginHorizontal();
             for (int col = LevelConfig.WidthCells - 1; col >= 0; col--)
             {
-                GUI.color = colors[levelTarget.GetValue(col, row)];
-                if (GUILayout.Button("", GUILayout.Width(30), GUILayout.Height(30)))
+                var index = levelTarget.GetValue(col, row);
+                string label = "";
+                switch (index)
                 {
-                    levelTarget.SetValue(col, row, (levelTarget.GetValue(col, row) + 1) % 3);
+                    case 1:
+                        label = "O";
+                        break;
+                    case 2:
+                        label = "T";
+                        break;
+                    case 3:
+                        label = "S";
+                        break;
+                }
+                GUI.color = colors[index];
+                if (GUILayout.Button(label, GUILayout.Width(30), GUILayout.Height(30)))
+                {
+                    levelTarget.SetValue(col, row, LevelConfig.GetNextTileState(levelTarget.GetValue(col, row)));
                     EditorUtility.SetDirty(serializedObject.targetObject);
                 }
                 GUI.color = precolor;
@@ -42,13 +57,44 @@ public class LevelConfigEditor : Editor
             EditorUtility.SetDirty(serializedObject.targetObject);
         }
 
-        EditorGUILayout.HelpBox("Legend \n" +
+        EditorGUILayout.HelpBox(" Legend \n\n" +
            "Green: Free space \n" +
-           "Red: Obstacle\n" +
-           "Magenta: Target position", MessageType.Info);
+           "Red: Obstacle ( O ) \n" +
+           "Magenta: Target position ( T )\n" +
+           "Cyan: Start position ( S )", MessageType.Info);
+
+
+        if(!CheckValidity())
+        {
+            EditorGUILayout.HelpBox(" NOT VALID \n\n" +
+                "(Only) one START and one TARGET needed", MessageType.Error);
+        }
 
         serializedObject.ApplyModifiedProperties();
 
         EditorGUILayout.EndHorizontal();
+
+        bool CheckValidity()
+        {
+            bool startFound = false;
+            bool targetFound = false;
+            for (int i = 0; i < levelTarget.Tiles.Length; i++)
+            {
+                var current = levelTarget.Tiles[i];
+                if (current == (int)TileState.Start)
+                {
+                    if (startFound) return false;
+                    startFound = true;
+                }
+                if (current == (int)TileState.Target)
+                {
+                    if (targetFound) return false;
+                    targetFound = true;
+                }
+            }
+
+            return startFound && targetFound;
+        }
     }
+
 }
