@@ -593,6 +593,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536259398}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &564786547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 564786548}
+  m_Layer: 0
+  m_Name: Obstacle Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &564786548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564786547}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 707609701}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &587312202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 707609701}
   m_Layer: 0
-  m_Name: runner offset
+  m_Name: static offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1033,6 +1063,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1751911810}
+  - {fileID: 564786548}
   m_Father: {fileID: 834052094}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1196,6 +1227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7469d4bb5465f224a8a051f1629acc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  __messageText: 
+  runnerHolder: {fileID: 1751911814}
+  holeHolder: {fileID: 299961000}
+  obstaclesHolder: {fileID: 564786548}
+  obstaclePrefab: {fileID: 2416940319911412749, guid: ec0f5b74a1c9ec040b5603d2a941eead,
+    type: 3}
 --- !u!1 &845443415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,7 +1768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1300839892}
   m_Layer: 0
-  m_Name: grid offset
+  m_Name: turning offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2133,7 +2170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087c9c9d142ed564f98576cd97bd8693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stages: []
+  Stages:
+  - {fileID: 11400000, guid: 0429ea234ac364f91bca76826137d985, type: 2}
 --- !u!4 &1781817412
 Transform:
   m_ObjectHideFlags: 0

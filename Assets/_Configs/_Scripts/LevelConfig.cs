@@ -8,30 +8,32 @@ using UnityEngine;
 public class LevelConfig : BaseLevelConfig
 {
     public int[] Tiles;
-    public Vector2Int targetPosition;
-    public Vector2Int startPosition;
+    public int targetX;
+    public int targetY;
+    public int startX;
+    public int startY;
+
+
+
+    public Vector2Int targetPosition { get { return new Vector2Int(targetX, targetY); } }
+    public Vector2Int startPosition { get { return new Vector2Int(startX, startY); } }
 
     public void Init()
     {
-        targetPosition = new Vector2Int(WidthCells - 1, HeightCells - 1);
-        startPosition = new Vector2Int(0,0);
+        targetX = WidthCells - 1;
+        targetY = HeightCells - 1;
+        startX = 0;
+        startY = 0;
+
         Tiles = new int[HeightCells * WidthCells];
 
-        Tiles[Index(targetPosition.x, targetPosition.y)] = (int)TileState.Target;
-        Tiles[Index(startPosition.x, startPosition.y)] = (int)TileState.Start;
+        Tiles[Index(targetX, targetY)] = (int)TileState.Target;
+        Tiles[Index(startX, startY)] = (int)TileState.Start;
     }
 
     public void SetValue(int column, int row, int tileState)
     {
-        if (tileState == (int)TileState.Target)
-        {
-            targetPosition = new Vector2Int(column, row);
-        }
-        if (tileState == (int)TileState.Start)
-        {
-            startPosition = new Vector2Int(column, row);
-        }
-
+       
         Tiles[Index(column, row)] = tileState;
     }
 

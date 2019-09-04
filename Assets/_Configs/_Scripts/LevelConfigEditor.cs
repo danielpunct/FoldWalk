@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(LevelConfig), true)]
 public class LevelConfigEditor : Editor
 {
-
     public Color[] colors = new[] { Color.green, Color.red, Color.magenta, Color.cyan };
 
 
@@ -26,12 +23,12 @@ public class LevelConfigEditor : Editor
             EditorGUILayout.BeginHorizontal();
             for (int col = LevelConfig.WidthCells - 1; col >= 0; col--)
             {
-                var index = levelTarget.GetValue(col, row);
+                var stateIndex = levelTarget.GetValue(col, row);
                 string label = "";
-                switch (index)
+                switch (stateIndex)
                 {
                     case 1:
-                        label = "O";
+                        label = "";
                         break;
                     case 2:
                         label = "T";
@@ -40,11 +37,10 @@ public class LevelConfigEditor : Editor
                         label = "S";
                         break;
                 }
-                GUI.color = colors[index];
+                GUI.color = colors[stateIndex];
                 if (GUILayout.Button(label, GUILayout.Width(30), GUILayout.Height(30)))
                 {
                     levelTarget.SetValue(col, row, LevelConfig.GetNextTileState(levelTarget.GetValue(col, row)));
-                    EditorUtility.SetDirty(serializedObject.targetObject);
                 }
                 GUI.color = precolor;
             }
@@ -54,7 +50,6 @@ public class LevelConfigEditor : Editor
         if (GUILayout.Button("Clear"))
         {
             levelTarget.Init();
-            EditorUtility.SetDirty(serializedObject.targetObject);
         }
 
         EditorGUILayout.HelpBox(" Legend \n\n" +
@@ -64,35 +59,49 @@ public class LevelConfigEditor : Editor
            "Cyan: Start position ( S )", MessageType.Info);
 
 
+        EditorUtility.SetDirty(serializedObject.targetObject);
+
         if(!CheckValidity())
         {
             EditorGUILayout.HelpBox(" NOT VALID \n\n" +
                 "(Only) one START and one TARGET needed", MessageType.Error);
         }
 
-        serializedObject.ApplyModifiedProperties();
 
         EditorGUILayout.EndHorizontal();
+
+        serializedObject.ApplyModifiedProperties();
 
         bool CheckValidity()
         {
             bool startFound = false;
             bool targetFound = false;
-            for (int i = 0; i < levelTarget.Tiles.Length; i++)
+
+            for (int row = 0; row < LevelConfig.HeightCells; row++)
             {
-                var current = levelTarget.Tiles[i];
-                if (current == (int)TileState.Start)
+                for (int col = LevelConfig.WidthCells - 1; col >= 0; col--)
                 {
-                    if (startFound) return false;
-                    startFound = true;
-                }
-                if (current == (int)TileState.Target)
-                {
-                    if (targetFound) return false;
-                    targetFound = true;
+                    var current = levelTarget.GetValue(col, row);
+                    if (current == (int)TileState.Start)
+                    {
+                        if (startFound) return false;
+
+                        levelTarget.startX = col;
+                        levelTarget.startY = row;
+
+                        startFound = true;
+                    }
+                    if (current == (int)TileState.Target)
+                    {
+                        if (targetFound) return false;
+
+                        levelTarget.targetX = col;
+                        levelTarget.targetY = row;
+
+                        targetFound = true;
+                    }
                 }
             }
-
             return startFound && targetFound;
         }
     }

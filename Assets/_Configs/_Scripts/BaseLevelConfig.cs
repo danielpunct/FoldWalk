@@ -5,5 +5,5 @@ using UnityEngine;
 public class BaseLevelConfig : ScriptableObject
 {
     public const int WidthCells = 5;
-    public const int HeightCells = 4;
+    public const int HeightCells = 5;
 }

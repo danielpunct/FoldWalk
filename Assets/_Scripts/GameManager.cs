@@ -7,9 +7,15 @@ public class GameManager : MonoBehaviour
     int currentStage = 0;
     int currentLevel = 0;
 
+
+    private void Start()
+    {
+        StartGame();
+    }
+
     public void StartGame()
     {
-
+        Game.Instance.SetupLevel(Stages[currentStage].Levels[currentLevel]);
     }
 
 

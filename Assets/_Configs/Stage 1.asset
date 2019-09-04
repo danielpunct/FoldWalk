@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Stage 1
   m_EditorClassIdentifier: 
   Levels:
-  - {fileID: 11400000, guid: b7ffb84dead3a4bbfb6ef0aed180ae9e, type: 2}
+  - {fileID: 11400000, guid: a9dd84360eeb9d746aa12b68ac66b5af, type: 2}
+  - {fileID: 11400000, guid: a48f4589397bafe40807f366afed0b58, type: 2}
