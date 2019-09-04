@@ -11,15 +11,36 @@ public class TurnPage : MonoBehaviour
     public float resetVelocity = -99999;
 
     public HingeJoint joint;
+
+    Rigidbody _rb;
+    Sequence seq;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     public void ResetForMenu()
     {
         joint.useMotor = false;
-        joint.GetComponent<Rigidbody>().DORotate(new Vector3(-157, 0, 0), 0.5f);
-        //joint.transform.DOLocalRotate(new Vector3(-158, 0, 0), 0.5f);
+        joint.transform.DOLocalRotate(new Vector3(-158, 0, 0), 0.5f);
     }
 
-    public void StartLevel()
+    public void StartLevel(bool afterPass)
     {
-        joint.useMotor = true;
+        seq?.Kill();
+        seq = DOTween.Sequence();
+        if (afterPass)
+        {
+            transform.localEulerAngles = new Vector3(-157, 0, 0);
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            joint.useMotor = true;
+        }
+        else
+        {
+            seq.Insert(0, _rb.DORotate(new Vector3(-157, 0, 0), 0.5f))
+               .InsertCallback(0.5f, () => { joint.useMotor = true; });
+        }
     }
 }

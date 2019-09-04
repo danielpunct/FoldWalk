@@ -13,7 +13,8 @@ public enum TileState
 
 public enum RunnerState
 {
-    Resting, 
+    Stopped,
+    Idle, 
     Walking
 }
 
@@ -21,4 +22,11 @@ public enum GameState
 {
     InMenu,
     LevelActive
+}
+public enum Direction
+{
+    Up = 0,
+    Right,
+    Down,
+    Left
 }

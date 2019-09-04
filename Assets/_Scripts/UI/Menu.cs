@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
 
     public void OnPlayClick()
     {
-        GameManager.Instance.StartCurrentLevel();
+        GameManager.Instance.StartCurrentLevel(true);
 
         HideStartUI();
     }

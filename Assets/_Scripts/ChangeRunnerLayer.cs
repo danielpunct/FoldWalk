@@ -11,9 +11,11 @@ public class ChangeRunnerLayer : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
+            Debug.Log("player enter");
             other.gameObject.layer = LayerOnEnter;
             skipExit = true;
-            Debug.Log("enter");
+
+            Game.Instance.OnPlayerHitTarget();
         }
     }
 
@@ -27,7 +29,6 @@ public class ChangeRunnerLayer : MonoBehaviour {
                 return;
             }
             other.gameObject.layer = LayerOnExit;
-            Debug.Log("exit");
         }
     }
 }

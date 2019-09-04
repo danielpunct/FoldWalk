@@ -1,4 +1,5 @@
 ﻿using Gamelogic.Extensions;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -13,18 +14,20 @@ public class GameManager : Singleton<GameManager>
         Game.Instance.ResetForMenu();
     }
 
-    public void StartCurrentLevel()
+    public void StartCurrentLevel(bool afterPass)
     {
-        Game.Instance.StartLevel(Stages[currentStage].Levels[currentLevel]);
+        Game.Instance.StartLevel(Stages[currentStage].Levels[currentLevel], afterPass);
     }
 
-    public void OnLevelPassed()
+    public IEnumerator OnLevelPassed()
     {
+        Game.Instance.ShowLevelPassed();
+
         // go to next level
         if (currentLevel < Stages[currentStage].Levels.Length - 1)
         {
             currentLevel++;
-        } 
+        }
         // or go to next stage
         else if (currentStage < Stages.Length - 1)
         {
@@ -34,48 +37,21 @@ public class GameManager : Singleton<GameManager>
         // game finishsed
         else
         {
-            return;
+            yield break;
         }
 
-        StartCurrentLevel();
+
+        yield return new WaitForSeconds(2);
+
+        StartCurrentLevel(true);
     }
 
-    public void OnLevelFailed()
+    public IEnumerator OnLevelFailed()
     {
+        Game.Instance.ShowLevelFail();
 
-    }
+        yield return new WaitForSeconds(2);
 
-
-    /// <summary>
-    /// Translate the Swipe gesture from the mouse to a direction for the player
-    /// </summary>
-    /// <param name="direction"></param>
-    public void OnDirection(int direction)
-    {
-        if(Game.Instance.State != GameState.LevelActive)
-        {
-            return;
-        }
-        var gridDirection = Vector3.forward;
-        switch ((Direction)direction)
-        {
-            case Direction.Up:
-                gridDirection = Vector3.back;
-                break;
-            case Direction.Right:
-                gridDirection = Vector3.left;
-                break;
-            case Direction.Down:
-                gridDirection = Vector3.forward;
-                break;
-            case Direction.Left:
-                gridDirection = Vector3.right;
-                break;
-        }
-
-        // Try to move the player
-        Runner.Instance.SetDirection(gridDirection);
+        StartCurrentLevel(false);
     }
 }
-
-public enum Direction { Up = 0, Right, Down, Left }
