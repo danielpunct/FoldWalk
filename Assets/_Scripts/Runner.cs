@@ -36,7 +36,7 @@ public class Runner : Singleton<Runner>
         var currentPosition2DFloats = _tr.localPosition.To2DXZ();
 
         // compare with destination
-        if ((destinationPosition2D - currentPosition2DFloats).sqrMagnitude >0.02f)
+        if ((destinationPosition2D - currentPosition2DFloats).sqrMagnitude >0.05f)
         {
             _rb.MovePosition(_tr.position + currentDirection * Speed);
             _state = RunnerState.Walking;
@@ -85,6 +85,5 @@ public class Runner : Singleton<Runner>
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.parent.position + currentPosition2D.To3D(), 0.3f);
-
     }
 }

@@ -16,3 +16,9 @@ public enum RunnerState
     Resting, 
     Walking
 }
+
+public enum GameState
+{
+    InMenu,
+    LevelActive
+}
