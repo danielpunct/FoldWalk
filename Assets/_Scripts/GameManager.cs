@@ -7,43 +7,86 @@ public class GameManager : Singleton<GameManager>
     public StageLevelsData[] Stages;
 
     int currentStage = 0;
-    int currentLevel = 0;
+    int currentLevelIndex = 0;
+    bool randomLevelGetter = false;
+    LevelConfig currentLevel = null;
+
+    LevelConfig GetNextLevel
+    {
+        get
+        {
+            // save last end position
+            Vector2Int lastTarget = new Vector2Int(0, 0);
+            if(currentLevel != null)
+            {
+                lastTarget = currentLevel.targetPosition;
+                currentLevel = null;
+            }
+
+            if (!randomLevelGetter)
+            {
+                currentLevel = Stages[currentStage].Levels[currentLevelIndex];
+            }
+            else
+            {
+                if (LevelGenerator.GetLevel(lastTarget, out var level))
+                {
+                    currentLevel = level;
+                }
+            }
+
+            return currentLevel;
+        }
+    }
 
     private void Start()
     {
         Game.Instance.ResetForMenu();
     }
 
-    public void StartCurrentLevel(bool afterPass)
+    public void StartCurrentLevel(bool afterPass, bool isRandoms)
     {
-        Game.Instance.StartLevel(Stages[currentStage].Levels[currentLevel], afterPass);
+        randomLevelGetter = isRandoms;
+
+        if (afterPass)
+        {
+            currentLevel = GetNextLevel;
+        }
+        if (currentLevel == null)
+        {
+            // goto menu
+        }
+
+        Game.Instance.StartLevel(currentLevel, afterPass);
     }
 
     public IEnumerator OnLevelPassed()
     {
         Game.Instance.ShowLevelPassed();
 
-        // go to next level
-        if (currentLevel < Stages[currentStage].Levels.Length - 1)
+        if (!randomLevelGetter)
         {
-            currentLevel++;
+            // go to next level
+            if (currentLevelIndex < Stages[currentStage].Levels.Length - 1)
+            {
+                currentLevelIndex++;
+            }
+            // or go to next stage
+            else if (currentStage < Stages.Length - 1)
+            {
+                currentStage++;
+                currentLevelIndex = 0;
+            }
+            // game finishsed
+            else
+            {
+                yield break;
+            }
         }
-        // or go to next stage
-        else if (currentStage < Stages.Length - 1)
-        {
-            currentStage++;
-            currentLevel = 0;
-        }
-        // game finishsed
-        else
-        {
-            yield break;
-        }
-
 
         yield return new WaitForSeconds(2);
 
-        StartCurrentLevel(true);
+        StartCurrentLevel(true, randomLevelGetter);
     }
 
     public IEnumerator OnLevelFailed()
@@ -52,6 +95,12 @@ public class GameManager : Singleton<GameManager>
 
         yield return new WaitForSeconds(2);
 
-        StartCurrentLevel(false);
+        Menu.Instance.ShowRestartUI();
+    }
+
+
+    public void RestartLevel()
+    {
+        StartCurrentLevel(false, randomLevelGetter);
     }
 }

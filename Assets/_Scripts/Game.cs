@@ -1,6 +1,4 @@
 ﻿using Gamelogic.Extensions;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : Singleton<Game>
@@ -13,19 +11,30 @@ public class Game : Singleton<Game>
     public GameObject obstaclePrefab;
 
     public ParticleSystem winParticles;
+    public ParticleSystem looseParticles;
 
     public GameState State { get; set; }
 
     public void OnPlayerHitTarget()
     {
-        StartCoroutine(GameManager.Instance.OnLevelPassed());
+        if (State == GameState.LevelActive)
+        {
+            StartCoroutine(GameManager.Instance.OnLevelPassed());
+        }
     }
 
     public void OnPlayerHitPage()
     {
-        StartCoroutine(GameManager.Instance.OnLevelFailed());
+        if (State == GameState.LevelActive)
+        {
+            StartCoroutine(GameManager.Instance.OnLevelFailed());
+        }
     }
 
+    public void Suspend()
+    {
+        State = GameState.InMenu;
+    }
 
     public void ResetForMenu()
     {
@@ -43,7 +52,7 @@ public class Game : Singleton<Game>
         indicatorHolder.transform.localPosition = levelConfig.targetPosition.To3D();
 
         // clear any obstacles from previous level
-        obstaclesHolder.DestroyChildren();
+        PoolManager.Instance.ObstaclesPool.DespawnAll();
 
         // place new obstacles as in the level config
         for (int row = 0; row < LevelConfig.HeightCells; row++)
@@ -54,7 +63,8 @@ public class Game : Singleton<Game>
 
                 if(stateIndex == (int)TileState.Obstacle)
                 {
-                    var obstacle = Instantiate(obstaclePrefab, obstaclesHolder);
+                    var obstacle = PoolManager.Instance.ObstaclesPool.Spawn(Vector3.zero, Quaternion.identity, obstaclesHolder).GetComponent<Obstacle>();
+                    obstacle.Reset();
                     obstacle.transform.localPosition = new Vector2Int(col, row).To3D();
                 }
             }
@@ -70,6 +80,8 @@ public class Game : Singleton<Game>
     public void ShowLevelFail()
     {
         runnerHolder.SetForFail();
+        looseParticles.Stop();
+        looseParticles.Play();
     }
 
     public void ShowLevelPassed()

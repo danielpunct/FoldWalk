@@ -33,7 +33,6 @@ public class LevelConfig : BaseLevelConfig
 
     public void SetValue(int column, int row, int tileState)
     {
-       
         Tiles[Index(column, row)] = tileState;
     }
 
@@ -42,7 +41,7 @@ public class LevelConfig : BaseLevelConfig
         return Tiles[Index(column, row)];
     }
 
-    int Index(int column, int row)
+    public static int Index(int column, int row)
     {
         return row * WidthCells + column;
     }

@@ -1,22 +1,83 @@
-﻿using System.Collections;
+﻿using Gamelogic.Extensions;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+// should to be refactored, so that the event would go through game manager - for clarity
+public class Menu : Singleton<Menu> 
 {
-    public GameObject playButton;
+    public GameObject startUI;
+    public GameObject restartUI;
+    public GameObject gameUI;
 
-
-    public void OnPlayClick()
+    private void Start()
     {
-        GameManager.Instance.StartCurrentLevel(true);
+        ShowStartUI();
+    }
 
+    public void OnPlayClassicalClick()
+    {
+        GameManager.Instance.StartCurrentLevel(true, false);
+
+        ShowGameUI();
+    }
+  public void OnPlayRandomsClick()
+    {
+        GameManager.Instance.StartCurrentLevel(true, true);
+
+        ShowGameUI();
+    }
+
+    public void OnRestartClick()
+    {
+        GameManager.Instance.RestartLevel();
+
+        ShowGameUI();
+    }
+
+    public void OnShowStartUIClick()
+    {
+        Game.Instance.Suspend();
+
+        ShowStartUI();
+    }
+
+
+    public void ShowStartUI()
+    {
+        startUI.SetActive(true);
+        HideGameUI();
+        HideRestartUI();
+    }
+
+    public void HideStartUI()
+    {
+        startUI.SetActive(false);
+    }
+
+
+
+
+    public void ShowRestartUI()
+    {
+        restartUI.SetActive(true);
+        HideGameUI();
         HideStartUI();
     }
-
-
-    void HideStartUI()
+    public void HideRestartUI()
     {
-        playButton.SetActive(false);
+        restartUI.SetActive(false);
     }
+
+    public void ShowGameUI()
+    {
+        gameUI.SetActive(true);
+        HideRestartUI();
+        HideStartUI();
+    }
+    public void HideGameUI()
+    {
+        gameUI.SetActive(false);
+    }
+
 }
